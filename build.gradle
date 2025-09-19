@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.jinsehyun'
+version = '0.0.1-SNAPSHOT'
+description = 'Public Wifi Information Service using Seoul Open API'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Spring
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// JSP
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'               // JSP 엔진
+	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+	runtimeOnly  'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'            // JSTL 구현체
+
+	// SQLite (JDBC 드라이버)
+	runtimeOnly 'org.xerial:sqlite-jdbc:3.46.0.1'
+
+	// Hibernate SQLite dialect (Hibernate 6 커뮤니티 모듈)
+	implementation 'org.hibernate.orm:hibernate-community-dialects:6.5.2.Final'
+
+	// OpenAPI 호출 & JSON 파싱
+	implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+	implementation 'com.google.code.gson:gson:2.11.0'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
